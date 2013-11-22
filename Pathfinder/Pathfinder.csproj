@@ -46,7 +46,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>.\Xceed.Wpf.Toolkit.dll</HintPath>
+      <HintPath>..\3rdParty\WpfToolkit\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
