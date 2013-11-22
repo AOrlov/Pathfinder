@@ -18,7 +18,8 @@ namespace Pathfinder
 
 		public void Execute(object parameter)
 		{
-			_action();
+			if(CanExecute(parameter))
+				_action();
 		}
 		public event EventHandler CanExecuteChanged;
 	}

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Automation;
 using System.Windows.Input;
-using Pathfinder.Properties;
+using Xceed.Wpf.Toolkit.PropertyGrid.Converters;
 
 namespace Pathfinder.ViewModels
 {
-	public class MainViewModel : INotifyPropertyChanged
+	public class MainViewModel : BaseViewModel
 	{
 		public ICommand CheckCommand { get; set; }
 		private string _path;
@@ -35,8 +33,8 @@ namespace Pathfinder.ViewModels
 			}
 		}
 
-		private AutomationElement.AutomationElementInformation _selectedItem;
-		public AutomationElement.AutomationElementInformation SelectedItem
+		private AutomationElementViewModel _selectedItem;
+		public AutomationElementViewModel SelectedItem
 		{
 			get
 			{
@@ -49,10 +47,10 @@ namespace Pathfinder.ViewModels
 			}
 		}
 
-		private AutomationElement.AutomationElementInformation[] _elements;
-		
+		private AutomationElementViewModel[] _elements;
 
-		public AutomationElement.AutomationElementInformation[] Elements
+
+		public AutomationElementViewModel[] Elements
 		{
 			get { return _elements; }
 			set
@@ -71,22 +69,13 @@ namespace Pathfinder.ViewModels
 		{
 			try
 			{
-				Elements = AutomationHelper.LocateElement(AutomationElement.RootElement, Path).Select(a => a.Current).ToArray();
+				Elements = AutomationHelper.LocateElement(AutomationElement.RootElement, Path).Select(AutomationElementViewModel.FromAutomationElement).ToArray();
 			}
 			catch (Exception)
 			{
-				Elements = new AutomationElement.AutomationElementInformation[0];
+				Elements = new AutomationElementViewModel[0];
 			}
 		
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChangedEventHandler handler = PropertyChanged;
-			if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
