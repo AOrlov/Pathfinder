@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Automation;
 using System.Windows.Input;
-using Pathfinder.Annotations;
+using Pathfinder.Properties;
 
 namespace Pathfinder.ViewModels
 {
