@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Pathfinder.Annotations;
+using Pathfinder.Properties;
 
 namespace Pathfinder.ViewModels
 {
