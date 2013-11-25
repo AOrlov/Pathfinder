@@ -1,16 +1,19 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Automation;
 using System.Windows.Input;
-using Xceed.Wpf.Toolkit.PropertyGrid.Converters;
 
 namespace Pathfinder.ViewModels
 {
 	public class MainViewModel : BaseViewModel
 	{
-		public ICommand CheckCommand { get; set; }
 		private string _path;
-		
+		private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+		private Task _task;
+
+		public ICommand CheckCommand { get; set; }
+
 		public string Path
 		{
 			get { return _path; }
@@ -29,7 +32,8 @@ namespace Pathfinder.ViewModels
 			{
 				_selectedIndex = value;
 				OnPropertyChanged();
-				SelectedItem = Elements[_selectedIndex];
+				if(_elements!= null && _elements.Length != 0)
+					SelectedItem = Elements[_selectedIndex];
 			}
 		}
 
@@ -48,8 +52,6 @@ namespace Pathfinder.ViewModels
 		}
 
 		private AutomationElementViewModel[] _elements;
-
-
 		public AutomationElementViewModel[] Elements
 		{
 			get { return _elements; }
@@ -58,25 +60,74 @@ namespace Pathfinder.ViewModels
 				_elements = value;
 				OnPropertyChanged();
 				SelectedIndex = 0;
+				IsInProgress = false;
 			}
 		}
 
 		public MainViewModel()
 		{
+			SetSearchState();
 			CheckCommand = new RelayCommand(OnCheckCommand);
 		}
 
 		public void OnCheckCommand()
 		{
-			try
+				var token = _cts.Token;
+				token.ThrowIfCancellationRequested();
+				_task = new Task(() =>
+				{
+					SetCancelState();
+					SelectedItem = null;
+					Elements =
+						AutomationHelper.LocateElement(AutomationElement.RootElement, Path)
+							.Select(AutomationElementViewModel.FromAutomationElement)
+							.ToArray();
+				}, token, TaskCreationOptions.AttachedToParent);
+				_task.ContinueWith(t => SetSearchState(), token);
+				_task.Start();
+		}
+
+		private void SetCancelState()
+		{
+			IsInProgress = true;
+			ButtonName = "Cancel";
+			CheckCommand = new RelayCommand(OnCancellCommand);
+		}
+
+		public void OnCancellCommand()
+		{
+			_cts.Cancel();
+			SetSearchState();
+		}
+
+		private void SetSearchState()
+		{
+			CheckCommand = new RelayCommand(OnCheckCommand);
+			ButtonName = "Search";
+			IsInProgress = false;
+			
+		}
+
+		private bool _isInProgress;
+		public bool IsInProgress
+		{
+			get { return _isInProgress; }
+			set
 			{
-				Elements = AutomationHelper.LocateElement(AutomationElement.RootElement, Path).Select(AutomationElementViewModel.FromAutomationElement).ToArray();
+				_isInProgress = value;
+				OnPropertyChanged();
 			}
-			catch (Exception)
+		}
+
+		private string _buttonName;
+		public string ButtonName
+		{
+			get { return _buttonName; }
+			set
 			{
-				Elements = new AutomationElementViewModel[0];
+				_buttonName = value;
+				OnPropertyChanged();
 			}
-		
 		}
 	}
 }
