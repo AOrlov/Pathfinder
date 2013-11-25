@@ -57,6 +57,7 @@ namespace Pathfinder.ViewModels
 			{
 				_elements = value;
 				OnPropertyChanged();
+				SelectedIndex = 0;
 			}
 		}
 
