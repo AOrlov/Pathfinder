@@ -17,7 +17,7 @@
 			<TextBox x:Name="InputPath" Height="23" Grid.Column="0" Margin="10,10,10,0" TextWrapping="Wrap" Text="{Binding Path=Path}" VerticalAlignment="Top" PreviewKeyDown="InputPath_OnPreviewKeyDown"/>
 			<ListBox Grid.Row="1" Grid.Column="0" Margin="10 10 10 10" ItemsSource="{Binding Path=Elements}" SelectedIndex="{Binding SelectedIndex}" />
 			<GridSplitter Grid.Row="1" Grid.Column="0" ShowsPreview="True" Width="1" ResizeDirection="Columns"/>
-			<xctk:PropertyGrid AutoGenerateProperties="True" SelectedObject="{Binding Path=SelectedItem}"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" IsReadOnly="True" />
+			<xctk:PropertyGrid AutoGenerateProperties="True" SelectedObject="{Binding Path=SelectedItem}"  Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" IsReadOnly="False"/>
 
 		<Grid Height="23" Grid.Row="0" Grid.Column="1" Margin="10,0,10,0">
 			<Button x:Name="SeachButton" IsDefault="True" Content="{Binding ButtonName}" Command="{Binding CheckCommand}" HorizontalAlignment="Left" Width="75"/>

@@ -16,7 +16,7 @@ namespace Pathfinder.ViewModels
 		public string Name
 		{
 			get { return _name; }
-			set
+			private set
 			{
 				_name = value;
 				OnPropertyChanged();
@@ -31,7 +31,7 @@ namespace Pathfinder.ViewModels
 		public string ClassName
 		{
 			get { return _className; }
-			set
+			private set
 			{
 				_className = value;
 				OnPropertyChanged();
@@ -41,7 +41,7 @@ namespace Pathfinder.ViewModels
 		public string AutomationId
 		{
 			get { return _automationId; }
-			set
+			private set
 			{
 				_automationId = value;
 				OnPropertyChanged();
@@ -51,7 +51,7 @@ namespace Pathfinder.ViewModels
 		public ControlType ControlType
 		{
 			get { return _controlType; }
-			set
+			private set
 			{
 				_controlType = value;
 				OnPropertyChanged();
@@ -87,29 +87,29 @@ namespace Pathfinder.ViewModels
 		[ExpandableObject]
 		[Category("ControlPatterns")]
 		[DisplayName("Supported Patterns")]
-		public AutomationPatternViewModel[] ControlPatterns { get; set; }
+		public AutomationPatternViewModel[] ControlPatterns { get; private set; }
 
 		[Category("Visibility")]
-		public bool ClicablePoint { get; set; }
+		public bool ClicablePoint { get; private set; }
 		[Category("Visibility")]
-		public Rect BoubdingRectangle { get; set; }
+		public Rect BoubdingRectangle { get; private set; }
 
 		[Category("State")]
-		public bool HasKeyboardFocus { get; set; }
+		public bool HasKeyboardFocus { get; private set; }
 		[Category("State")]
-		public bool IsEnabled { get; set; }
+		public bool IsEnabled { get; private set; }
 
 		[Category("Identification")]
-		public bool IsControlElement { get; set; }
+		public bool IsControlElement { get; private set; }
 		[Category("Identification")]
-		public bool IsContentElement { get; set; }
+		public bool IsContentElement { get; private set; }
 		[Category("Identification")]
-		public bool IsPassword { get; set; }
+		public bool IsPassword { get; private set; }
 		[Category("Identification")]
-		public string FrameworkId { get; set; }
+		public string FrameworkId { get; private set; }
 		[Category("Identification")]
-		public int ProcessId { get; set; }
+		public int ProcessId { get; private set; }
 		[Category("Identification")]
-		public string LocalizedControlType { get; set; }
+		public string LocalizedControlType { get; private set; }
 	}
 }
