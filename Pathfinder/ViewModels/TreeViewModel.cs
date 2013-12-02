@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Automation;
 using System.Windows.Input;
 
@@ -11,9 +6,9 @@ namespace Pathfinder.ViewModels
 {
 	public class TreeViewModel : BaseViewModel
 	{
-		private ObservableCollection<TreeViewItemViewModel> _items;
+		private ObservableCollection<TreeItemViewModel> _items;
 
-		public ObservableCollection<TreeViewItemViewModel> Items
+		public ObservableCollection<TreeItemViewModel> Items
 		{
 			get
 			{
@@ -28,9 +23,8 @@ namespace Pathfinder.ViewModels
 
 		public TreeViewModel()
 		{
-			_selectedItem = null;
-			Items = new ObservableCollection<TreeViewItemViewModel>{new TreeViewItemViewModel(AutomationElement.RootElement)};
-			SetSelectedItemCommand = new RelayCommand<TreeViewItemViewModel>(selected => { SelectedItem = selected.InnerElement; });
+			Items = new ObservableCollection<TreeItemViewModel>{new TreeItemViewModel(AutomationElement.RootElement)};
+			SetSelectedItemCommand = new RelayCommand<TreeItemViewModel>(selected => { SelectedItem = selected.InnerElementViewModel; });
 		}
 
 		public ICommand SetSelectedItemCommand { get; set; }
@@ -48,7 +42,5 @@ namespace Pathfinder.ViewModels
 				}
 			}
 		}
-
-
 	}
 }

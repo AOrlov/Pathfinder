@@ -63,7 +63,7 @@
     <Compile Include="ViewModels\AutomationElementViewModel.cs" />
     <Compile Include="ViewModels\AutomationPatternViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
-    <Compile Include="ViewModels\TreeViewItemViewModel.cs" />
+    <Compile Include="ViewModels\TreeItemViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>

@@ -32,11 +32,11 @@
 			</i:Interaction.Triggers>
 			<TreeView.Resources>
 			<HierarchicalDataTemplate
-					DataType="{x:Type vm:TreeViewItemViewModel}" 
+					DataType="{x:Type vm:TreeItemViewModel}" 
 					ItemsSource="{Binding Children}">
 				<StackPanel Orientation="Horizontal">
 
-				<TextBlock Text="{Binding InnerElement}" />
+				<TextBlock Text="{Binding InnerElementViewModel}" />
 				</StackPanel>
 			</HierarchicalDataTemplate>
 			</TreeView.Resources>
