@@ -77,7 +77,7 @@ namespace Pathfinder.ViewModels
 				IsEnabled = current.IsEnabled,
 				HasKeyboardFocus = current.HasKeyboardFocus,
 
-				BoubdingRectangle = current.BoundingRectangle,
+				BoundingRectangle = current.BoundingRectangle,
 				ClicablePoint = current.IsOffscreen,
 
 				ControlPatterns = element.GetSupportedPatterns().Select(AutomationPatternViewModel.FromAutomationPattern).ToArray()
@@ -92,7 +92,7 @@ namespace Pathfinder.ViewModels
 		[Category("Visibility")]
 		public bool ClicablePoint { get; private set; }
 		[Category("Visibility")]
-		public Rect BoubdingRectangle { get; private set; }
+		public Rect BoundingRectangle { get; private set; }
 
 		[Category("State")]
 		public bool HasKeyboardFocus { get; private set; }
