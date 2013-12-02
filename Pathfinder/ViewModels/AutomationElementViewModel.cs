@@ -25,7 +25,7 @@ namespace Pathfinder.ViewModels
 
 		public override string ToString()
 		{
-			return ControlType.ToString();
+			return string.Format("\"{0}\" \"{1}\"", LocalizedControlType, Name);
 		}
 		[Category("Identification")]
 		public string ClassName
