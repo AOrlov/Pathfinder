@@ -101,5 +101,10 @@ namespace Pathfinder
 		{
 			return control.StartsWith("..");
 		}
+
+		public static IEnumerable<AutomationElement> GetChildren(this AutomationElement parent)
+		{
+			return parent.FindAll(TreeScope.Children, Condition.TrueCondition).OfType<AutomationElement>();
+		} 
 	}
 }
