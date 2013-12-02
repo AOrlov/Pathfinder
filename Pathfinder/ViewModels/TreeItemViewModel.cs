@@ -6,7 +6,6 @@ namespace Pathfinder.ViewModels
 {
 	public class TreeItemViewModel : BaseViewModel
 	{
-		private readonly TreeItemViewModel _dummyChild = new TreeItemViewModel();
 		private readonly AutomationElement _innerAutomationElement;
 
 		private AutomationElementViewModel _innerElementViewModel;
@@ -25,14 +24,9 @@ namespace Pathfinder.ViewModels
 
 		public TreeItemViewModel(AutomationElement element)
 		{
-			Children = new ObservableCollection<TreeItemViewModel> { _dummyChild };
+			Children = new ObservableCollection<TreeItemViewModel> { null };
 			_innerAutomationElement = element;
 			InnerElementViewModel = AutomationElementViewModel.FromAutomationElement(element);
-		}
-
-		private TreeItemViewModel()
-		{
-			Children = new ObservableCollection<TreeItemViewModel> { _dummyChild };
 		}
 
 		private bool _isSelected;
@@ -60,11 +54,6 @@ namespace Pathfinder.ViewModels
 			}
 		}
 
-		public bool HasDummyChild
-		{
-			get { return Children.Count == 1 && Children[0] == _dummyChild; }
-		}
-
 		private bool _isExpanded;
 		public bool IsExpanded
 		{
@@ -77,11 +66,7 @@ namespace Pathfinder.ViewModels
 					OnPropertyChanged();
 				}
 
-				if (HasDummyChild)
-				{
-					Children.Remove(_dummyChild);
-					LoadChildren();
-				}
+				LoadChildren();
 			}
 		}
 
