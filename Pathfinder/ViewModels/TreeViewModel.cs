@@ -23,11 +23,17 @@ namespace Pathfinder.ViewModels
 
 		public TreeViewModel()
 		{
-			Items = new ObservableCollection<TreeItemViewModel>{new TreeItemViewModel(AutomationElement.RootElement)};
-			SetSelectedItemCommand = new RelayCommand<TreeItemViewModel>(selected => { SelectedItem = selected.InnerElementViewModel; });
+			Items = new ObservableCollection<TreeItemViewModel>{new TreeItemViewModel(AutomationElement.RootElement) {IsExpanded = true}};
+			SetSelectedItemCommand = new RelayCommand<TreeItemViewModel>(selected =>
+			{
+				if(selected == null) return;
+				SelectedItem = selected.InnerElementViewModel;
+			});
+			PreventTreeScrollCommand = new RelayCommand(() => { });
 		}
 
 		public ICommand SetSelectedItemCommand { get; set; }
+		public ICommand PreventTreeScrollCommand { get; set; }
 
 		private AutomationElementViewModel _selectedItem;
 		public AutomationElementViewModel SelectedItem

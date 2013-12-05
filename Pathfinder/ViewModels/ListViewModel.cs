@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Pathfinder.ViewModels
 {
-	public class MainViewModel : BaseViewModel
+	public class ListViewModel : BaseViewModel
 	{
 		private string _path;
 		private readonly CancellationTokenSource _cts = new CancellationTokenSource();
@@ -64,7 +64,7 @@ namespace Pathfinder.ViewModels
 			}
 		}
 
-		public MainViewModel()
+		public ListViewModel()
 		{
 			SetSearchState();
 			CheckCommand = new RelayCommand(OnCheckCommand);

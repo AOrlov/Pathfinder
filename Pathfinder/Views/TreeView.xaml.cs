@@ -12,5 +12,10 @@ namespace Pathfinder.Views
 		{
 			InitializeComponent();
 		}
+
+		private void TreeViewItemRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

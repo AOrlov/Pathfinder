@@ -5,9 +5,9 @@ namespace Pathfinder.Views
 	/// <summary>
 	/// Interaction logic for MainView.xaml
 	/// </summary>
-	public partial class MainView
+	public partial class ListView
 	{
-		public MainView()
+		public ListView()
 		{
 			InitializeComponent();
 		}
