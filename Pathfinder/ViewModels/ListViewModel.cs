@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Automation;
@@ -6,13 +7,25 @@ using System.Windows.Input;
 
 namespace Pathfinder.ViewModels
 {
-	public class ListViewModel : BaseViewModel
+	public class ListViewModel : BaseViewModel, IDisposable
 	{
 		private string _path;
-		private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+		private CancellationTokenSource _cts;
 		private Task _task;
 
-		public ICommand CheckCommand { get; set; }
+		private ICommand _checkCommand;
+		public ICommand CheckCommand
+		{
+			get
+			{
+				return _checkCommand;
+			}
+			private set
+			{
+				_checkCommand = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public string Path
 		{
@@ -72,19 +85,20 @@ namespace Pathfinder.ViewModels
 
 		public void OnCheckCommand()
 		{
-				var token = _cts.Token;
-				token.ThrowIfCancellationRequested();
-				_task = new Task(() =>
-				{
-					SetCancelState();
-					SelectedItem = null;
-					Elements =
-						AutomationHelper.LocateElement(AutomationElement.RootElement, Path)
-							.Select(AutomationElementViewModel.FromAutomationElement)
-							.ToArray();
-				}, token, TaskCreationOptions.AttachedToParent);
-				_task.ContinueWith(t => SetSearchState(), token);
-				_task.Start();
+			_cts = new CancellationTokenSource();
+			var token = _cts.Token;
+			token.ThrowIfCancellationRequested();
+			_task = new Task(() =>
+			{
+				SetCancelState();
+				SelectedItem = null;
+				Elements =
+					AutomationHelper.LocateElement(AutomationElement.RootElement, Path)
+						.Select(AutomationElementViewModel.FromAutomationElement)
+						.ToArray();
+			}, token, TaskCreationOptions.AttachedToParent);
+			_task.ContinueWith(t => SetSearchState(), token);
+			_task.Start();
 		}
 
 		private void SetCancelState()
@@ -120,6 +134,8 @@ namespace Pathfinder.ViewModels
 		}
 
 		private string _buttonName;
+		
+
 		public string ButtonName
 		{
 			get { return _buttonName; }
@@ -128,6 +144,11 @@ namespace Pathfinder.ViewModels
 				_buttonName = value;
 				OnPropertyChanged();
 			}
+		}
+
+		public void Dispose()
+		{
+			_cts.Cancel();
 		}
 	}
 }
